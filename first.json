@@ -1,0 +1,10 @@
+{
+    "backround": "images/backround1.jpg",
+
+    "template": [
+        [0, 1, 1],
+        [0, 0, 0],
+        [0, 0, 0]
+    ]
+
+}
