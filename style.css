@@ -38,3 +38,6 @@ body{
     flex-direction: row;
     background-color: blue;
 }
+.painted{
+    background-color: blueviolet;
+}
