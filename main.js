@@ -1,29 +1,127 @@
+console.log("loaded");
+
 let house = document.getElementById("house");
+let grid;
+let startPos;
 
-
-function initBoard(result, task){
-    var numId = 1;
-            for(let i = 0; i < result.size; i++){
-                let floor = document.createElement("div");
-                floor.classList.add("floor");
-                for(let j = 0; j < result.size; j++){
-                    let tile = document.createElement("div");
-                    tile.classList.add("tile");
-                    tile.setAttribute('id', numId);
-                    numId++;
-                    floor.appendChild(tile);
-                }
-                house.appendChild(floor);
-            }
-
-            let start = document.getElementById(result.tasks[task].startPos);
-            start.classList.add("start");
-
-            for(let i = 0; i < result.tasks[task].barriers.length; i++){
-                let barrier = document.getElementById(result.tasks[task].barriers[i]);
-                barrier.classList.add("barrier");
-            }
+function coordToString(x, y) {
+    return (String(x) + String(y));
 }
+
+function createGrid(grid) {
+    let house = document.getElementById("house");
+    var x = 0;
+    var y = 0;
+    grid.forEach(row => {
+        let floor = document.createElement("div");
+        floor.classList.add("floor");
+        row.forEach(tile => {
+            let item = document.createElement("div");
+            item.classList.add("tile");
+            item.id = coordToString(x, y);
+            x += 1;
+            if (tile == 1) {
+                item.classList.add("barrier");
+            } else if (tile == -1) {
+                item.classList.add("start");
+            }
+            floor.appendChild(item);
+        })
+        x = 0;
+        y += 1;
+        house.appendChild(floor);
+    })
+
+}
+
+
+function paintRight(grid) {
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    var size = grid.length;
+    while (grid[startPos.y][startPos.x + 1] != 1 && (startPos.x + 1 < size)) {
+        startPos.x += 1
+        let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        toPaint.classList.add("painted");
+        console.log(startPos);
+    }
+
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+}
+
+function paintLeft(grid) {
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    var size = grid.length;
+    console.log(startPos);
+    while ((grid[startPos.y][startPos.x - 1] != 1) && (startPos.x - 1 >= 0)) {
+        startPos.x -= 1
+        let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        toPaint.classList.add("painted");
+        console.log(startPos);
+    }
+
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+}
+
+function paintUp(grid) {
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    var size = grid.length;
+
+    while ((startPos.y - 1 >= 0) && (grid[startPos.y - 1][startPos.x] != 1)) {
+        startPos.y -= 1
+        let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        toPaint.classList.add("painted");
+        console.log(startPos);
+
+    }
+
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+}
+
+
+function paintDown(grid) {
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    var size = grid.length;
+
+    while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] != 1) ) {
+        startPos.y += 1
+        let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        toPaint.classList.add("painted");
+        console.log(startPos);
+
+    }
+
+    document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+}
+
+
+
+
+
+
+function handleArrowKey(event) {
+    switch (event.key) {
+        case "ArrowUp":
+            console.log("Arrow Up pressed");
+            paintUp(grid);
+            break;
+        case "ArrowDown":
+            console.log("Arrow Down pressed");
+            paintDown(grid);
+            break;
+        case "ArrowLeft":
+            console.log("Arrow Left pressed");
+            paintLeft(grid);
+            break;
+        case "ArrowRight":
+            console.log("Arrow Right pressed");
+            paintRight(grid);
+            break;
+    }
+}
+
+document.addEventListener("keydown", handleArrowKey);
+
+
 
 function getData(task) {
     return fetch('data.json').then(response => {
@@ -33,11 +131,14 @@ function getData(task) {
         return null;
     }).then(result => {
         if (result != null) {
-            initBoard(result, task);
+            grid = result.tasks[task].grid;
+            startPos = result.tasks[task].startPos;
+
+            createGrid(grid);
+
         } else {
             console.error("response is empty");
         }
     })
 }
 getData(0);
-
