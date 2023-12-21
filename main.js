@@ -47,7 +47,7 @@ function paintRight(grid) {
 
 function paintLeft(grid) {
     var size = grid.length;
-    console.log(startPos);
+    // console.log(startPos);
     while ((grid[startPos.y][startPos.x - 1] != 1) && (startPos.x - 1 >= 0)) {
         startPos.x -= 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
@@ -121,7 +121,7 @@ function getData(task) {
         if (result != null) {
             grid = result.tasks[task].grid;
             startPos = result.tasks[task].startPos;
-
+            // console.log(grid);
             createGrid(grid);
 
         } else {
@@ -129,4 +129,4 @@ function getData(task) {
         }
     })
 }
-getData(0);
+getData(4);
