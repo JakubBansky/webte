@@ -25,6 +25,36 @@ function initBoard(result, task){
             }
 }
 
+function moveRight(currentIndex, size){
+    while (currentIndex < size && currentIndex) {
+        
+    }
+}
+
+function handleArrowKey(event) {
+    switch(event.key) {
+      case "ArrowUp":
+        console.log("Up arrow pressed");
+        // Add your up arrow handling code here
+        break;
+      case "ArrowDown":
+        console.log("Down arrow pressed");
+        // Add your down arrow handling code here
+        break;
+      case "ArrowLeft":
+        console.log("Left arrow pressed");
+        // Add your left arrow handling code here
+        break;
+      case "ArrowRight":
+        console.log("Right arrow pressed");
+        // Add your right arrow handling code here
+        break;
+    }
+  }
+
+  document.addEventListener('keydown', handleArrowKey);
+
+
 function getData(task) {
     return fetch('data.json').then(response => {
         if (response.ok) {
