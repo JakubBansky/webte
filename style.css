@@ -1,8 +1,14 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+
 #house{
     opacity: 1;
 }
 
 #cont{
+    margin-top:  2rem;
     background-image: url('images/img.png');
     background-size: cover;
     display: flex;
