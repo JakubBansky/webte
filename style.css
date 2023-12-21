@@ -1,0 +1,34 @@
+#house{
+    opacity: 1;
+}
+
+#cont{
+    background-image: url('images/img.png');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1000px;
+    height: 500px;
+}
+
+.tile{
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    border: 1px solid red;
+}
+
+.start{
+    background-color: yellow;
+}
+
+.barrier{
+    background-color: black;
+}
+
+.floor{
+    display: flex;
+    flex-direction: row;
+    background-color: blue;
+}

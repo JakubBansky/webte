@@ -1,44 +1,43 @@
-console.log("loaded");
-
 let house = document.getElementById("house");
 
-function createItem(row){
-    let floor = document.createElement("div");
-    floor.classList.add("floor");
-    row.forEach(tile=>{
-        let item = document.createElement("div");
-        item.classList.add("tile");
-        if(tile == 1){
-            item.classList.add("obstacle");
-        }
-        else if(tile == 0){
-            item.classList.add("empty");
-        }
-        
-        floor.appendChild(item);
-    })
-    house.appendChild(floor);
+
+function initBoard(result, task){
+    var numId = 1;
+            for(let i = 0; i < result.size; i++){
+                let floor = document.createElement("div");
+                floor.classList.add("floor");
+                for(let j = 0; j < result.size; j++){
+                    let tile = document.createElement("div");
+                    tile.classList.add("tile");
+                    tile.setAttribute('id', numId);
+                    numId++;
+                    floor.appendChild(tile);
+                }
+                house.appendChild(floor);
+            }
+
+            let start = document.getElementById(result.tasks[task].startPos);
+            start.classList.add("start");
+
+            for(let i = 0; i < result.tasks[task].barriers.length; i++){
+                let barrier = document.getElementById(result.tasks[task].barriers[i]);
+                barrier.classList.add("barrier");
+            }
 }
 
-function getData() {
-    return fetch('first.json').then(response => {
+function getData(task) {
+    return fetch('data.json').then(response => {
         if (response.ok) {
             return response.json();
         }
         return null;
     }).then(result => {
         if (result != null) {
-            let container = document.getElementById("cont");
-            var image = document.createElement("img");
-            image.src = result.backround;
-            // container.appendChild(image); remake
-            result.template.forEach(row => {
-                    console.log(row)
-                    createItem(row);
-            })
+            initBoard(result, task);
         } else {
             console.error("response is empty");
         }
     })
 }
-getData();
+getData(0);
+
