@@ -1,14 +1,8 @@
 let house = document.getElementById("house");
 
-function getData(task) {
-    return fetch('data.json').then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        return null;
-    }).then(result => {
-        if (result != null) {
-            var numId = 1;
+
+function initBoard(result, task){
+    var numId = 1;
             for(let i = 0; i < result.size; i++){
                 let floor = document.createElement("div");
                 floor.classList.add("floor");
@@ -29,9 +23,21 @@ function getData(task) {
                 let barrier = document.getElementById(result.tasks[task].barriers[i]);
                 barrier.classList.add("barrier");
             }
+}
+
+function getData(task) {
+    return fetch('data.json').then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        return null;
+    }).then(result => {
+        if (result != null) {
+            initBoard(result, task);
         } else {
             console.error("response is empty");
         }
     })
 }
 getData(0);
+
