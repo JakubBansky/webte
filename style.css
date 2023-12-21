@@ -22,11 +22,10 @@ body{
     z-index: 10;
     width: 50px;
     height: 50px;
-    border: 1px solid red;
 }
 
 .start{
-    background-color: yellow;
+    background-color: forestgreen;
 }
 
 .barrier{
@@ -39,9 +38,9 @@ body{
     background-color: blue;
 }
 .painted{
-    background-color: blueviolet;
+    background-color: forestgreen;
 }
 
 .actualPos {
-    background-color: white;
+    background-color: yellow;
 }

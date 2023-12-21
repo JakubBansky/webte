@@ -36,7 +36,11 @@ function createGrid(grid) {
 
 
 function paintRight(grid) {
-    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
+    if(actualPos.classList.contains('actualPos')){
+        actualPos.classList.remove('actualPos');
+    }
+
     var size = grid.length;
     while (grid[startPos.y][startPos.x + 1] != 1 && (startPos.x + 1 < size)) {
         startPos.x += 1
@@ -49,7 +53,11 @@ function paintRight(grid) {
 }
 
 function paintLeft(grid) {
-    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
+    if(actualPos.classList.contains('actualPos')){
+        actualPos.classList.remove('actualPos');
+    }
+
     var size = grid.length;
     console.log(startPos);
     while ((grid[startPos.y][startPos.x - 1] != 1) && (startPos.x - 1 >= 0)) {
@@ -63,7 +71,11 @@ function paintLeft(grid) {
 }
 
 function paintUp(grid) {
-    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
+    if(actualPos.classList.contains('actualPos')){
+        actualPos.classList.remove('actualPos');
+    }
+
     var size = grid.length;
 
     while ((startPos.y - 1 >= 0) && (grid[startPos.y - 1][startPos.x] != 1)) {
@@ -79,7 +91,11 @@ function paintUp(grid) {
 
 
 function paintDown(grid) {
-    document.getElementById(coordToString(startPos.x, startPos.y)).classList.remove("actualPos");
+    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
+    if(actualPos.classList.contains('actualPos')){
+        actualPos.classList.remove('actualPos');
+    }
+
     var size = grid.length;
 
     while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] != 1) ) {
@@ -92,11 +108,6 @@ function paintDown(grid) {
 
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
 }
-
-
-
-
-
 
 function handleArrowKey(event) {
     switch (event.key) {
@@ -121,8 +132,6 @@ function handleArrowKey(event) {
 
 document.addEventListener("keydown", handleArrowKey);
 
-
-
 function getData(task) {
     return fetch('data.json').then(response => {
         if (response.ok) {
@@ -141,4 +150,4 @@ function getData(task) {
         }
     })
 }
-getData(0);
+getData(4);
