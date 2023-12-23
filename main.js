@@ -11,19 +11,19 @@ function coordToString(x, y) {
     return (String(x) + String(y));
 }
 
-function swap(x,y, array){
+function swap(x, y, array) {
     let tmp = array[x];
     array[x] = array[y];
     array[y] = tmp;
 }
 
-function genRandomArray(size){
+function genRandomArray(size) {
     let array = [];
     for (let i = 0; i < size; i++) {
-       array.push(i);
+        array.push(i);
     }
-    for (let j = 0; j < Math.floor(Math.random()*5); j++) {
-        swap(j, Math.floor(Math.random()*size), array);
+    for (let j = 0; j < Math.floor(Math.random() * 5); j++) {
+        swap(j, Math.floor(Math.random() * size), array);
     }
     // console.log(array);
     return array;
@@ -59,7 +59,7 @@ function createGrid(grid) {
 
 function paintRight(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
@@ -76,7 +76,7 @@ function paintRight(grid) {
 
 function paintLeft(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
@@ -94,7 +94,7 @@ function paintLeft(grid) {
 
 function paintUp(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
@@ -114,13 +114,13 @@ function paintUp(grid) {
 
 function paintDown(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
     // var size = grid.length;
 
-    while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] !== 1) ) {
+    while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] !== 1)) {
         startPos.y += 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
@@ -153,7 +153,7 @@ function handleArrowKey(event) {
     }
 
     checkAllPainted(grid);
-    if(allPainted){
+    if (allPainted) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
     }
@@ -162,18 +162,18 @@ function handleArrowKey(event) {
 
 document.addEventListener("keydown", handleArrowKey);
 
-function checkAllPainted(){
+function checkAllPainted() {
     let painted = 0;
-    for(let i = 0; i < 6; i++){
-        for(let j = 0; j < 6; j++){
-            let item = document.getElementById(coordToString(i,j));
-            if(item.classList.contains('painted') || item.classList.contains('barrier')) {
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+            let item = document.getElementById(coordToString(i, j));
+            if (item.classList.contains('painted') || item.classList.contains('barrier')) {
                 painted++;
             }
         }
     }
 
-    if(painted === 36){
+    if (painted === 36) {
         // console.log("All tiles painted");
         allPainted = true;
     } else {
@@ -200,7 +200,7 @@ function getData(task) {
             grid = result.tasks[task].grid;
             startPos = result.tasks[task].startPos;
             createGrid(grid);
-            
+
 
         } else {
             console.error("response is empty");
@@ -212,36 +212,36 @@ let taskNum = 0
 getData(levelOrder[taskNum]);
 
 let againButton = document.getElementById("again");
-againButton.addEventListener("click", ()=>{
+againButton.addEventListener("click", () => {
     let modalFinished = document.getElementById("modalFinished");
     levelOrder = genRandomArray(5);
-    let taskNum = 0
+    taskNum = 0
     getData(levelOrder[taskNum]);
     // modal.style.display = "none";
     modalFinished.style.display = "none";
-})  
+})
 
 
 let quitButton = document.getElementById("quit");
-quitButton.addEventListener("click", ()=>{
+quitButton.addEventListener("click", () => {
     window.location.href = "https://www.google.com";
-})  
+})
 
 let nextButton = document.getElementById('next');
 nextButton.addEventListener("click", () => {
+    taskNum += 1
     modal.style.display = "none";
     let houseDiv = document.getElementById('house');
     houseDiv.innerHTML = '';
     // console.log(taskNum, size-1);
-    if(taskNum == size-2){
+    if (taskNum == size - 1) {
         let modalFinished = document.getElementById("modalFinished");
         modalFinished.style.display = 'block';
-    }
-    else{
-        taskNum += 1
+    } else {
+
         getData(taskNum);
     }
-   
+
 });
 
 let restartButton = document.getElementById('restart');

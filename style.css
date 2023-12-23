@@ -74,3 +74,10 @@
 #modalFinished{
     display: none;
 }
+
+
+#menuClose{
+    position: relative;
+    left: 150px;
+    bottom: 80px;
+}
