@@ -1,6 +1,5 @@
 body{
-    display: flex;
-    justify-content: center;
+
 }
 
 #house{
@@ -22,11 +21,10 @@ body{
     z-index: 10;
     width: 50px;
     height: 50px;
-    border: 1px solid red;
 }
 
 .start{
-    background-color: yellow;
+    background-color: forestgreen;
 }
 
 .barrier{
@@ -39,5 +37,40 @@ body{
     background-color: blue;
 }
 .painted{
-    background-color: blueviolet;
+    background-color: forestgreen;
+}
+
+.actualPos {
+    background-color: yellow;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 2, 0.8);
+}
+
+.modalDiv {
+    margin-top: 10em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    width: 400px;
+    height: 200px;
+    background-color: lightgray;
+    border-radius: 0.7em;
+
+}
+
+.alignCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonDiv {
+    padding-top: 2em;
 }
