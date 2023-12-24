@@ -11,11 +11,31 @@ function coordToString(x, y) {
     return (String(x) + String(y));
 }
 
+//chat gtp
+
+// if (window.DeviceOrientationEvent) {
+//   // Add event listener for device orientation  
+//     console.log("success");
+//     window.addEventListener('deviceorientation', handleOrientation, false);
+// } else {
+//     console.log("Device orientation not supported");
+// }
+
+
+
+
+
+
 function swap(x, y, array) {
     let tmp = array[x];
     array[x] = array[y];
     array[y] = tmp;
 }
+
+
+
+
+
 
 function genRandomArray(size) {
     let array = [];
@@ -129,6 +149,45 @@ function paintDown(grid) {
     }
 
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+}
+
+window.addEventListener("deviceorientation", handleOrientation, true);
+
+//chat gtp
+function handleOrientation(event) {
+    var alpha = event.alpha;
+    var beta = event.beta;
+    var gamma = event.gamma;
+    console.log("abs: " + absolute + " a: " + alpha + "b: " + beta + "g: " + gamma);
+
+
+    // camera left
+    if (beta < 20 && beta > -20) {
+        // console.log("-5<b>5");
+        if (beta < -5) {
+            paintLeft(grid);
+            console.log("left");
+
+        } else if (beta > 5) {
+            paintRight(grid);
+            console.log("right");
+        }
+    }
+    if (gamma < -50 && gamma > -70 || gamma > 0 && gamma < 200) {
+        // console.log("-5<b>5");
+        if (gamma > -70 && gamma < 0) {
+            paintUp(grid);
+            console.log("up");
+
+        } else if (gamma > 70) {
+            paintDown(grid);
+            console.log("down");
+        }
+    }
+
+
+    // camera right
+
 }
 
 function handleArrowKey(event) {
