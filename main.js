@@ -1,13 +1,28 @@
-console.log("loaded");
-
-let house = document.getElementById("house");
 let grid;
 let startPos;
 let allPainted = false;
-let taskNum;
+let size;
+let levelOrder;
 
 function coordToString(x, y) {
     return (String(x) + String(y));
+}
+
+function swap(x, y, array) {
+    let tmp = array[x];
+    array[x] = array[y];
+    array[y] = tmp;
+}
+
+function genRandomArray(size) {
+    let array = [];
+    for (let i = 0; i < size; i++) {
+        array.push(i);
+    }
+    for (let j = 0; j < Math.floor(Math.random() * 5); j++) {
+        swap(j, Math.floor(Math.random() * size), array);
+    }
+    return array;
 }
 
 function createGrid(grid) {
@@ -40,16 +55,14 @@ function createGrid(grid) {
 
 function paintRight(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
-    var size = grid.length;
     while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {
         startPos.x += 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        console.log(startPos);
     }
 
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
@@ -57,17 +70,14 @@ function paintRight(grid) {
 
 function paintLeft(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
-    var size = grid.length;
-    console.log(startPos);
     while ((grid[startPos.y][startPos.x - 1] !== 1) && (startPos.x - 1 >= 0)) {
         startPos.x -= 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        console.log(startPos);
     }
 
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
@@ -75,17 +85,14 @@ function paintLeft(grid) {
 
 function paintUp(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
-
-    var size = grid.length;
 
     while ((startPos.y - 1 >= 0) && (grid[startPos.y - 1][startPos.x] !== 1)) {
         startPos.y -= 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        console.log(startPos);
 
     }
 
@@ -95,46 +102,37 @@ function paintUp(grid) {
 
 function paintDown(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if(actualPos.classList.contains('actualPos')){
+    if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
-    var size = grid.length;
-
-    while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] !== 1) ) {
+    while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] !== 1)) {
         startPos.y += 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        console.log(startPos);
-
     }
 
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
 }
 
 function handleArrowKey(event) {
-
     switch (event.key) {
         case "ArrowUp":
-            console.log("Arrow Up pressed");
             paintUp(grid);
             break;
         case "ArrowDown":
-            console.log("Arrow Down pressed");
             paintDown(grid);
             break;
         case "ArrowLeft":
-            console.log("Arrow Left pressed");
             paintLeft(grid);
             break;
         case "ArrowRight":
-            console.log("Arrow Right pressed");
             paintRight(grid);
             break;
     }
 
     checkAllPainted(grid);
-    if(allPainted){
+    if (allPainted) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
     }
@@ -143,27 +141,25 @@ function handleArrowKey(event) {
 
 document.addEventListener("keydown", handleArrowKey);
 
-function checkAllPainted(){
+function checkAllPainted() {
     let painted = 0;
-    for(let i = 0; i < 6; i++){
-        for(let j = 0; j < 6; j++){
-            let item = document.getElementById(coordToString(i,j));
-            if(item.classList.contains('painted') || item.classList.contains('barrier')) {
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+            let item = document.getElementById(coordToString(i, j));
+            if (item.classList.contains('painted') || item.classList.contains('barrier')) {
                 painted++;
             }
         }
     }
 
-    if(painted === 36){
-        console.log("All tiles painted");
+    if (painted === 36) {
         allPainted = true;
     } else {
-        console.log("Some tiles are not painted");
         allPainted = false;
     }
-
-    console.log(allPainted);
 }
+
+document.addEventListener("keydown", handleArrowKey);
 
 function getData(task) {
     return fetch('data.json').then(response => {
@@ -173,27 +169,74 @@ function getData(task) {
         return null;
     }).then(result => {
         if (result != null) {
+            size = result.size;
             grid = result.tasks[task].grid;
             startPos = result.tasks[task].startPos;
-
             createGrid(grid);
-
         } else {
             console.error("response is empty");
         }
     })
 }
 
-taskNum = Math.floor(Math.random() * 5)
-getData(taskNum);
+function removeTaskFromArray(task, array){
+    let num = array.indexOf(task);
+    array.splice(num, 1);
+}
+
+if(localStorage.getItem('task')){
+    taskNum = parseInt(localStorage.getItem('task'));
+    let n = localStorage.getItem('levelOrder').split(',');
+    levelOrder = Array.from(n);
+    getData(taskNum);
+} else {
+    levelOrder = genRandomArray(5);
+    taskNum = levelOrder[0];
+    getData(taskNum);
+    removeTaskFromArray(taskNum, levelOrder);
+}
+
+let againButton = document.getElementById("again");
+againButton.addEventListener("click", () => {
+    let modalFinished = document.getElementById("modalFinished");
+
+    levelOrder = genRandomArray(5);
+    taskNum = levelOrder[0];
+    removeTaskFromArray(taskNum, levelOrder);
+    localStorage.setItem('task', taskNum);
+    localStorage.setItem('levelOrder', levelOrder);
+    getData(taskNum);
+    modalFinished.style.display = "none";
+})
+
+
+let quitButton = document.getElementById("quit");
+quitButton.addEventListener("click", () => {
+    window.location.href = "https://www.google.com";
+})
 
 let nextButton = document.getElementById('next');
 nextButton.addEventListener("click", () => {
     modal.style.display = "none";
     let houseDiv = document.getElementById('house');
     houseDiv.innerHTML = '';
-    taskNum = Math.floor(Math.random() * 5)
-    getData(taskNum);
+    if (levelOrder.length === 0) {
+        let modalFinished = document.getElementById("modalFinished");
+        modalFinished.style.display = 'block';
+
+        levelOrder = genRandomArray(5);
+        taskNum = levelOrder[0];
+        removeTaskFromArray(taskNum, levelOrder);
+        localStorage.setItem('task', taskNum);
+        localStorage.setItem('levelOrder', levelOrder);
+        getData(taskNum);
+    } else {
+        taskNum = levelOrder[0];
+        removeTaskFromArray(taskNum, levelOrder);
+        localStorage.setItem('task', taskNum);
+        localStorage.setItem('levelOrder', levelOrder);
+        getData(taskNum);
+    }
 });
 
 let restartButton = document.getElementById('restart');
@@ -202,3 +245,8 @@ restartButton.addEventListener("click", () => {
     houseDiv.innerHTML = '';
     getData(taskNum);
 });
+
+let menuButton = document.getElementById("menu");
+menuButton.addEventListener("click", () => {
+    window.location.href = "index.html";
+})

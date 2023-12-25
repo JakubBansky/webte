@@ -1,5 +1,5 @@
-body{
-
+body {
+    background-color: midnightblue;
 }
 
 #house{
@@ -15,6 +15,8 @@ body{
     align-items: center;
     width: 1000px;
     height: 500px;
+    border-radius: 0.7em;
+    border: 5px solid olive;
 }
 
 .tile{
@@ -73,4 +75,19 @@ body{
 
 .buttonDiv {
     padding-top: 2em;
+}
+
+#modalFinished{
+    display: none;
+}
+
+#menuClose{
+    position: relative;
+    left: 150px;
+    bottom: 80px;
+}
+
+.title {
+    margin-top: 2rem;
+    color: white;
 }
