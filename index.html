@@ -8,6 +8,7 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
+    <link rel="manifest" href="./manifest.json">
 </head>
 <body>
 <div class="alignCenter">
@@ -34,6 +35,15 @@
 </div>
 
 <script src="menu.js">
+</script>
+<script>
+    navigator.serviceWorker.register('./serviceWorker.js')
+        .then((reg) => {
+            console.log("service worker registered", reg)
+        })
+        .catch((err) => {
+            console.log("error when registering service worker", err)
+        })
 </script>
 </body>
 

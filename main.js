@@ -185,11 +185,14 @@ function removeTaskFromArray(task, array){
 }
 
 if(localStorage.getItem('task')){
+    console.log(localStorage);
     taskNum = parseInt(localStorage.getItem('task'));
     let n = localStorage.getItem('levelOrder').split(',');
     levelOrder = Array.from(n);
     getData(taskNum);
+
 } else {
+    console.log(localStorage);
     levelOrder = genRandomArray(5);
     taskNum = levelOrder[0];
     getData(taskNum);
@@ -223,19 +226,30 @@ nextButton.addEventListener("click", () => {
     if (levelOrder.length === 0) {
         let modalFinished = document.getElementById("modalFinished");
         modalFinished.style.display = 'block';
+        console.log(localStorage);
 
+        /*
         levelOrder = genRandomArray(5);
         taskNum = levelOrder[0];
         removeTaskFromArray(taskNum, levelOrder);
         localStorage.setItem('task', taskNum);
         localStorage.setItem('levelOrder', levelOrder);
         getData(taskNum);
+
+         */
     } else {
+        console.log(localStorage);
         taskNum = levelOrder[0];
         removeTaskFromArray(taskNum, levelOrder);
         localStorage.setItem('task', taskNum);
         localStorage.setItem('levelOrder', levelOrder);
-        getData(taskNum);
+        if(taskNum !== ''){
+            getData(taskNum);
+        } else if(taskNum === ''){
+            let modalFinished = document.getElementById("modalFinished");
+            modalFinished.style.display = 'block';
+        }
+        console.log(localStorage);
     }
 });
 
