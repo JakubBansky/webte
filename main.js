@@ -11,29 +11,12 @@ function coordToString(x, y) {
     return (String(x) + String(y));
 }
 
-//chat gtp
-
-// if (window.DeviceOrientationEvent) {
-//   // Add event listener for device orientation  
-//     console.log("success");
-//     window.addEventListener('deviceorientation', handleOrientation, false);
-// } else {
-//     console.log("Device orientation not supported");
-// }
-
-
-
-
-
 
 function swap(x, y, array) {
     let tmp = array[x];
     array[x] = array[y];
     array[y] = tmp;
 }
-
-
-
 
 
 
@@ -77,21 +60,24 @@ function createGrid(grid) {
 }
 
 
-function paintRight(grid) {
+
+
+async function paintRight(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
     if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
-
-    // var size = grid.length;
-    while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {
+    var size = grid.length;
+    while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {   
         startPos.x += 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
+        // await new Promise(resolve => setTimeout(resolve, 100));
         // console.log(startPos);
     }
-
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+
+
 }
 
 function paintLeft(grid) {
@@ -153,17 +139,13 @@ function paintDown(grid) {
 
 window.addEventListener("deviceorientation", handleOrientation, true);
 
-//chat gtp
 function handleOrientation(event) {
-    var alpha = event.alpha;
     var beta = event.beta;
     var gamma = event.gamma;
-    console.log("abs: " + absolute + " a: " + alpha + "b: " + beta + "g: " + gamma);
-
 
     // camera left
     if (beta < 20 && beta > -20) {
-        // console.log("-5<b>5");
+        // -left-/-right-
         if (beta < -5) {
             paintLeft(grid);
             console.log("left");
@@ -173,20 +155,20 @@ function handleOrientation(event) {
             console.log("right");
         }
     }
-    if (gamma < -50 && gamma > -70 || gamma > 0 && gamma < 200) {
-        // console.log("-5<b>5");
-        if (gamma > -70 && gamma < 0) {
+    if ((beta <5 && beta > -5) || (beta > -180 && beta > -175 )) {
+        // -up-/-down-
+        if (gamma > -75 && gamma < -50) {
             paintUp(grid);
             console.log("up");
 
-        } else if (gamma > 70) {
+        } else if (gamma < 75 && gamma > 50) {
             paintDown(grid);
             console.log("down");
         }
     }
+    // cammera right TODO
 
 
-    // camera right
 
 }
 
