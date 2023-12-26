@@ -170,6 +170,13 @@ function handleOrientation(event) {
 
 
 
+    checkAllPainted(grid);
+    if (allPainted) {
+        let modal = document.getElementById("modal");
+        modal.style.display = "block";
+    }
+
+
 }
 
 function handleArrowKey(event) {
