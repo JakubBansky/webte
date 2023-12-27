@@ -68,7 +68,7 @@ async function paintRight(grid) {
         actualPos.classList.remove('actualPos');
     }
     var size = grid.length;
-    while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {   
+    while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {
         startPos.x += 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
@@ -148,32 +148,35 @@ function handleOrientation(event) {
         // -left-/-right-
         if (beta < -5) {
             paintLeft(grid);
-            console.log("left");
+            // console.log("left");
 
         } else if (beta > 5) {
             paintRight(grid);
-            console.log("right");
+            // console.log("right");
         }
     }
-    if ((beta <5 && beta > -5) || (beta > -180 && beta > -175 )) {
+    if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
         // -up-/-down-
         if (gamma > -75 && gamma < -50) {
             paintUp(grid);
-            console.log("up");
+            // console.log("up");
 
         } else if (gamma < 75 && gamma > 50) {
             paintDown(grid);
-            console.log("down");
+            // console.log("down");
         }
     }
     // cammera right TODO
 
-
+    console.log("here")
 
     checkAllPainted(grid);
     if (allPainted) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
+    }
+    else{
+        console.log("not painted");
     }
 
 
