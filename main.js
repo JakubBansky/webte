@@ -155,8 +155,7 @@ function handleOrientation(event) {
     if (allPainted) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
-    }
-    else{
+    } else {
         console.log("not painted");
     }
 
@@ -227,35 +226,17 @@ function getData(task) {
     })
 }
 
-taskNum = Math.floor(Math.random() * 5)
-getData(taskNum);
-
-} else {
-    console.log(localStorage);
-    levelOrder = genRandomArray(5);
-    taskNum = levelOrder[0];
-    getData(taskNum);
-    removeTaskFromArray(taskNum, levelOrder);
+function removeTaskFromArray(task, array){
+    let num = array.indexOf(task);
+    array.splice(num, 1);
 }
 
-let againButton = document.getElementById("again");
-againButton.addEventListener("click", () => {
-    let modalFinished = document.getElementById("modalFinished");
-
-    levelOrder = genRandomArray(5);
-    taskNum = levelOrder[0];
-    removeTaskFromArray(taskNum, levelOrder);
-    localStorage.setItem('task', taskNum);
-    localStorage.setItem('levelOrder', levelOrder);
+if(localStorage.getItem('task')){
+    console.log(localStorage);
+    taskNum = parseInt(localStorage.getItem('task'));
+    let n = localStorage.getItem('levelOrder').split(',');
+    levelOrder = Array.from(n);
     getData(taskNum);
-    modalFinished.style.display = "none";
-})
-
-
-// let quitButton = document.getElementById("quit");
-quitButton.addEventListener("click", () => {
-    window.location.href = "https://www.google.com";
-})
 
 } else {
     console.log(localStorage);
@@ -286,7 +267,6 @@ quitButton.addEventListener("click", () => {
 
 let nextButton = document.getElementById('next');
 nextButton.addEventListener("click", () => {
-    taskNum += 1
     modal.style.display = "none";
     let houseDiv = document.getElementById('house');
     houseDiv.innerHTML = '';
