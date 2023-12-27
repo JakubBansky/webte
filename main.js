@@ -1,6 +1,3 @@
-// console.log("loaded");
-
-let house = document.getElementById("house");
 let grid;
 let startPos;
 let allPainted = false;
@@ -11,14 +8,11 @@ function coordToString(x, y) {
     return (String(x) + String(y));
 }
 
-
 function swap(x, y, array) {
     let tmp = array[x];
     array[x] = array[y];
     array[y] = tmp;
 }
-
-
 
 function genRandomArray(size) {
     let array = [];
@@ -28,7 +22,6 @@ function genRandomArray(size) {
     for (let j = 0; j < Math.floor(Math.random() * 5); j++) {
         swap(j, Math.floor(Math.random() * size), array);
     }
-    // console.log(array);
     return array;
 }
 
@@ -67,13 +60,11 @@ async function paintRight(grid) {
     if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
-    var size = grid.length;
+
     while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {
         startPos.x += 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        // await new Promise(resolve => setTimeout(resolve, 100));
-        // console.log(startPos);
     }
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
 
@@ -86,13 +77,10 @@ function paintLeft(grid) {
         actualPos.classList.remove('actualPos');
     }
 
-    // var size = grid.length;
-    // console.log(startPos);
     while ((grid[startPos.y][startPos.x - 1] !== 1) && (startPos.x - 1 >= 0)) {
         startPos.x -= 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        // console.log(startPos);
     }
 
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
@@ -104,13 +92,10 @@ function paintUp(grid) {
         actualPos.classList.remove('actualPos');
     }
 
-    // var size = grid.length;
-
     while ((startPos.y - 1 >= 0) && (grid[startPos.y - 1][startPos.x] !== 1)) {
         startPos.y -= 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        // console.log(startPos);
 
     }
 
@@ -124,14 +109,10 @@ function paintDown(grid) {
         actualPos.classList.remove('actualPos');
     }
 
-    // var size = grid.length;
-
     while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] !== 1)) {
         startPos.y += 1
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        // console.log(startPos);
-
     }
 
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
@@ -183,22 +164,17 @@ function handleOrientation(event) {
 }
 
 function handleArrowKey(event) {
-
     switch (event.key) {
         case "ArrowUp":
-            // console.log("Arrow Up pressed");
             paintUp(grid);
             break;
         case "ArrowDown":
-            // console.log("Arrow Down pressed");
             paintDown(grid);
             break;
         case "ArrowLeft":
-            // console.log("Arrow Left pressed");
             paintLeft(grid);
             break;
         case "ArrowRight":
-            // console.log("Arrow Right pressed");
             paintRight(grid);
             break;
     }
@@ -225,19 +201,13 @@ function checkAllPainted() {
     }
 
     if (painted === 36) {
-        // console.log("All tiles painted");
         allPainted = true;
     } else {
-        // console.log("Some tiles are not painted");
         allPainted = false;
     }
-
-    // console.log(allPainted);
 }
 
 document.addEventListener("keydown", handleArrowKey);
-
-
 
 function getData(task) {
     return fetch('data.json').then(response => {
@@ -251,24 +221,60 @@ function getData(task) {
             grid = result.tasks[task].grid;
             startPos = result.tasks[task].startPos;
             createGrid(grid);
-
-
         } else {
             console.error("response is empty");
         }
     })
 }
-levelOrder = genRandomArray(5);
-let taskNum = 0
-getData(levelOrder[taskNum]);
+
+taskNum = Math.floor(Math.random() * 5)
+getData(taskNum);
+
+} else {
+    console.log(localStorage);
+    levelOrder = genRandomArray(5);
+    taskNum = levelOrder[0];
+    getData(taskNum);
+    removeTaskFromArray(taskNum, levelOrder);
+}
 
 let againButton = document.getElementById("again");
 againButton.addEventListener("click", () => {
     let modalFinished = document.getElementById("modalFinished");
+
     levelOrder = genRandomArray(5);
-    taskNum = 0
-    getData(levelOrder[taskNum]);
-    // modal.style.display = "none";
+    taskNum = levelOrder[0];
+    removeTaskFromArray(taskNum, levelOrder);
+    localStorage.setItem('task', taskNum);
+    localStorage.setItem('levelOrder', levelOrder);
+    getData(taskNum);
+    modalFinished.style.display = "none";
+})
+
+
+// let quitButton = document.getElementById("quit");
+quitButton.addEventListener("click", () => {
+    window.location.href = "https://www.google.com";
+})
+
+} else {
+    console.log(localStorage);
+    levelOrder = genRandomArray(5);
+    taskNum = levelOrder[0];
+    getData(taskNum);
+    removeTaskFromArray(taskNum, levelOrder);
+}
+
+let againButton = document.getElementById("again");
+againButton.addEventListener("click", () => {
+    let modalFinished = document.getElementById("modalFinished");
+
+    levelOrder = genRandomArray(5);
+    taskNum = levelOrder[0];
+    removeTaskFromArray(taskNum, levelOrder);
+    localStorage.setItem('task', taskNum);
+    localStorage.setItem('levelOrder', levelOrder);
+    getData(taskNum);
     modalFinished.style.display = "none";
 })
 
@@ -284,15 +290,34 @@ nextButton.addEventListener("click", () => {
     modal.style.display = "none";
     let houseDiv = document.getElementById('house');
     houseDiv.innerHTML = '';
-    // console.log(taskNum, size-1);
-    if (taskNum == size - 1) {
+    if (levelOrder.length === 0) {
         let modalFinished = document.getElementById("modalFinished");
         modalFinished.style.display = 'block';
-    } else {
+        console.log(localStorage);
 
+        /*
+        levelOrder = genRandomArray(5);
+        taskNum = levelOrder[0];
+        removeTaskFromArray(taskNum, levelOrder);
+        localStorage.setItem('task', taskNum);
+        localStorage.setItem('levelOrder', levelOrder);
         getData(taskNum);
-    }
 
+         */
+    } else {
+        console.log(localStorage);
+        taskNum = levelOrder[0];
+        removeTaskFromArray(taskNum, levelOrder);
+        localStorage.setItem('task', taskNum);
+        localStorage.setItem('levelOrder', levelOrder);
+        if(taskNum !== ''){
+            getData(taskNum);
+        } else if(taskNum === ''){
+            let modalFinished = document.getElementById("modalFinished");
+            modalFinished.style.display = 'block';
+        }
+        console.log(localStorage);
+    }
 });
 
 let restartButton = document.getElementById('restart');
@@ -301,3 +326,8 @@ restartButton.addEventListener("click", () => {
     houseDiv.innerHTML = '';
     getData(taskNum);
 });
+
+let menuButton = document.getElementById("menu");
+menuButton.addEventListener("click", () => {
+    window.location.href = "index.html";
+})

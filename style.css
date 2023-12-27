@@ -1,3 +1,7 @@
+body {
+    background-color: midnightblue;
+}
+
 #house{
     opacity: 1;
 }
@@ -11,6 +15,8 @@
     align-items: center;
     width: 1000px;
     height: 500px;
+    border-radius: 0.7em;
+    border: 5px solid olive;
 }
 
 .tile{
@@ -80,4 +86,19 @@
     position: relative;
     left: 150px;
     bottom: 80px;
+}
+
+#modalFinished{
+    display: none;
+}
+
+#menuClose{
+    position: relative;
+    left: 150px;
+    bottom: 80px;
+}
+
+.title {
+    margin-top: 2rem;
+    color: white;
 }
