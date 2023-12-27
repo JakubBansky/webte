@@ -119,60 +119,67 @@ function paintDown(grid) {
 }
 
 window.addEventListener("deviceorientation", handleOrientation, true);
- 
+const windowWidth = window.innerWidth;
+const windowHeight = window.innerHeight;
+
+// Log window size to the console
+console.log(`Window Size: ${windowWidth} x ${windowHeight}`);
 
 function handleOrientation(event) {
+    var alpha = event.alpha;
     var beta = event.beta;
     var gamma = event.gamma;
     var betaSensitivity = 12;
-    var flagMoved = false;
 
     // camera left
-    if (beta < 15 && beta > -15) {
-        if (beta < -betaSensitivity) {
-            paintLeft(grid);
-            console.log("Lleft");
+    console.log(alpha);
+    if (alpha < 300 && alpha > 260) {
+        if (beta < 15 && beta > -15) {
+            if (beta < -betaSensitivity) {
+                paintLeft(grid);
+                console.log("Lleft");
 
-        } else if (beta > betaSensitivity) {
-            paintRight(grid);
-            console.log("Lright");
+            } else if (beta > betaSensitivity) {
+                paintRight(grid);
+                console.log("Lright");
+            }
+        }
+        // camera left
+        if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
+            // -up-/-down-
+            if (gamma > -60 && gamma < -50) {
+                paintUp(grid);
+                console.log("up");
+
+            } else if (gamma < -80 && gamma > -90) {
+                paintDown(grid);
+                console.log("down");
+            }
         }
     }
     // camera right
-    else if (Math.abs(beta) < 180 && Math.abs(beta) > 160) {
-        if (beta < 180 - betaSensitivity && beta > 160) {
-            paintLeft(grid);
-            console.log("Rleft");
+    if (alpha < 110 && alpha > 70) {
+        if (beta < 15 && beta > -15) {
+            if (beta < -betaSensitivity) {
+                paintRight(grid);
+                console.log("Rleft");
 
-        } else if (beta > -180 + betaSensitivity && beta < -160) {
-            paintRight(grid);
-            console.log("Rright");
+            } else if (beta > betaSensitivity) {
+                paintLeft(grid);
+                console.log("Rright");
+            }
         }
-    }
+        // camera left
+        if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
+            // -up-/-down-
+            if (gamma > 50 && gamma < 60) {
+                paintUp(grid);
+                console.log("Rup");
 
-    // camera left
-    if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-        // -up-/-down-
-        if (gamma > -75 && gamma < -50) {
-            paintUp(grid);
-            // console.log("up");
-
-        } else if (gamma < 75 && gamma > 50) {
-            paintDown(grid);
-            // console.log("down");
-        }
-    }
-
-    // camera right
-    if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-        // -up-/-down-
-        if (gamma > -75 && gamma < -50) {
-            paintUp(grid);
-            // console.log("up");
-
-        } else if (gamma < 75 && gamma > 50) {
-            paintDown(grid);
-            // console.log("down");
+            } else if (gamma < 90 && gamma > 80) {
+                paintDown(grid);
+                console.log("Rdown");
+            }
         }
     }
 
