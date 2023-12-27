@@ -119,23 +119,38 @@ function paintDown(grid) {
 }
 
 window.addEventListener("deviceorientation", handleOrientation, true);
+ 
 
 function handleOrientation(event) {
     var beta = event.beta;
     var gamma = event.gamma;
+    var betaSensitivity = 12;
+    var flagMoved = false;
 
     // camera left
-    if (beta < 20 && beta > -20) {
-        // -left-/-right-
-        if (beta < -5) {
+    if (beta < 15 && beta > -15) {
+        if (beta < -betaSensitivity) {
             paintLeft(grid);
-            // console.log("left");
+            console.log("Lleft");
 
-        } else if (beta > 5) {
+        } else if (beta > betaSensitivity) {
             paintRight(grid);
-            // console.log("right");
+            console.log("Lright");
         }
     }
+    // camera right
+    else if (Math.abs(beta) < 180 && Math.abs(beta) > 160) {
+        if (beta < 180 - betaSensitivity && beta > 160) {
+            paintLeft(grid);
+            console.log("Rleft");
+
+        } else if (beta > -180 + betaSensitivity && beta < -160) {
+            paintRight(grid);
+            console.log("Rright");
+        }
+    }
+
+    // camera left
     if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
         // -up-/-down-
         if (gamma > -75 && gamma < -50) {
@@ -147,16 +162,24 @@ function handleOrientation(event) {
             // console.log("down");
         }
     }
-    // cammera right TODO
 
-    console.log("here")
+    // camera right
+    if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
+        // -up-/-down-
+        if (gamma > -75 && gamma < -50) {
+            paintUp(grid);
+            // console.log("up");
+
+        } else if (gamma < 75 && gamma > 50) {
+            paintDown(grid);
+            // console.log("down");
+        }
+    }
 
     checkAllPainted(grid);
     if (allPainted) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
-    } else {
-        console.log("not painted");
     }
 
 
@@ -226,12 +249,12 @@ function getData(task) {
     })
 }
 
-function removeTaskFromArray(task, array){
+function removeTaskFromArray(task, array) {
     let num = array.indexOf(task);
     array.splice(num, 1);
 }
 
-if(localStorage.getItem('task')){
+if (localStorage.getItem('task')) {
     console.log(localStorage);
     taskNum = parseInt(localStorage.getItem('task'));
     let n = localStorage.getItem('levelOrder').split(',');
@@ -290,9 +313,9 @@ nextButton.addEventListener("click", () => {
         removeTaskFromArray(taskNum, levelOrder);
         localStorage.setItem('task', taskNum);
         localStorage.setItem('levelOrder', levelOrder);
-        if(taskNum !== ''){
+        if (taskNum !== '') {
             getData(taskNum);
-        } else if(taskNum === ''){
+        } else if (taskNum === '') {
             let modalFinished = document.getElementById("modalFinished");
             modalFinished.style.display = 'block';
         }

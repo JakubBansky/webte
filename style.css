@@ -1,104 +1,127 @@
 body {
-    background-color: midnightblue;
+	background-color: midnightblue;
 }
 
-#house{
-    opacity: 1;
+#house {
+	opacity: 1;
 }
 
-#cont{
-    margin-top:  2rem;
-    background-image: url('images/img.png');
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1000px;
-    height: 500px;
-    border-radius: 0.7em;
-    border: 5px solid olive;
+#cont {
+	margin-top: 2rem;
+	background-image: url("images/img.png");
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1000px;
+	height: 500px;
+	border-radius: 0.7em;
+	border: 5px solid olive;
 }
 
-.tile{
-    z-index: 10;
-    width: 50px;
-    height: 50px;
+.tile {
+	z-index: 10;
+	width: 50px;
+	height: 50px;
+    /* border-radius: 2%; */
 }
 
-.start{
-    background-color: forestgreen;
+.start {
+	background-color: forestgreen;
 }
 
-.barrier{
-    background-color: black;
+.barrier {
+	background: url(images/wood.png); 
+	background-size: cover; 
 }
 
-.floor{
-    display: flex;
-    flex-direction: row;
-    background-color: blue;
+.floor {
+	display: flex;
+	flex-direction: row;
+	background-color: blue;
 }
-.painted{
-    background-color: forestgreen;
+.painted {
+	background-color: forestgreen;
 }
 
 .actualPos {
-    background-color: yellow;
+	background-color: yellow;
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 2, 0.8);
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 2, 0.8);
 }
 
 .modalDiv {
-    margin-top: 10em;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    width: 400px;
-    height: 200px;
-    background-color: lightgray;
-    border-radius: 0.7em;
-
+	margin-top: 10em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	width: 400px;
+	height: 200px;
+	background-color: lightgray;
+	border-radius: 0.7em;
 }
 
 .alignCenter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem;
 }
 
 .buttonDiv {
-    padding-top: 2em;
+	padding-top: 2em;
 }
 
-#modalFinished{
-    display: none;
+#modalFinished {
+	display: none;
 }
 
-
-#menuClose{
-    position: relative;
-    left: 150px;
-    bottom: 80px;
+#menuClose {
+	position: relative;
+	left: 150px;
+	bottom: 80px;
 }
 
-#modalFinished{
-    display: none;
+#modalFinished {
+	display: none;
 }
 
-#menuClose{
-    position: relative;
-    left: 150px;
-    bottom: 80px;
+#menuClose {
+	position: relative;
+	left: 150px;
+	bottom: 80px;
 }
 
 .title {
-    margin-top: 2rem;
-    color: white;
+	margin-top: 2rem;
+	color: white;
+}
+
+.modalDiv div {
+	margin: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+	#cont {
+		margin-top: 0.3rem;
+		height: 350px;
+	}
+
+	.title {
+		font-size: 3vw;
+		margin: 0;
+	}
+	.alignCenter {
+		margin: 0.2rem;
+	}
+	.modalDiv {
+		margin-top: 5em;
+	}
 }
