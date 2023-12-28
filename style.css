@@ -1,0 +1,176 @@
+body {
+	background-color: dodgerblue;
+}
+
+#house {
+	opacity: 1;
+}
+
+#cont {
+	margin-top: 1rem;
+	background-image: url("images/img.png");
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1000px;
+	height: 500px;
+	border-radius: 0.7em;
+	border: 5px solid dodgerblue;
+}
+
+.main {
+	padding-top: 4em;
+}
+
+.tile {
+	z-index: 10;
+	width: 50px;
+	height: 50px;
+}
+
+.start {
+	background-color: darkorange;
+}
+
+.barrier {
+	background: url(images/wood.png);
+	background-size: cover;
+}
+
+.floor {
+	display: flex;
+	flex-direction: row;
+	background-color: blue;
+}
+
+.painted {
+	background-color: darkorange;
+}
+
+.actualPos {
+	background-color: white;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 2, 0.8);
+}
+
+.modalDiv {
+	margin-top: 10em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	width: 400px;
+	height: 200px;
+	background-color: lightgray;
+	border-radius: 0.7em;
+}
+
+.modalDivI {
+	margin-top: 10em;
+	padding-top: 1em;
+	padding-bottom: 2em;
+	width: 900px;
+	height: 800px;
+	background-color: lightgray;
+	border-radius: 0.7em;
+}
+
+.modalPad {
+	padding-top: 2em;
+}
+
+.modalTit {
+	font-weight: bold;
+}
+
+.modalIn {
+	padding-left: 2em;
+	padding-right: 2em;
+	text-align: left;
+}
+
+.alignCenter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.buttonDiv {
+	padding-top: 1em;
+}
+#restart, #menuG, #play, #menuOpen, #menu, #next, #again, #quit{
+	font-weight: bold;
+}
+
+#modalFinished {
+	display: none;
+}
+
+#menuClose {
+	position: relative;
+	left: 40%;
+	bottom: 80px;
+}
+
+#modalFinished {
+	display: none;
+}
+
+.title {
+	margin-top: 2rem;
+	color: black;
+	font-size: xxx-large;
+	font-weight: bold;
+}
+
+.modalDiv div {
+	margin: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+	#cont {
+		margin-top: 0.3rem;
+		height: 325px;
+	}
+
+	.title {
+		font-size: large;
+		margin: 0;
+	}
+	.alignCenter {
+		margin: 0.2rem;
+	}
+	.modalDiv {
+		margin-top: 5em;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.tile{
+		width: 70px;
+		height: 70px;
+	}
+	#cont{
+		height: 500px;
+	}
+}
+
+@media print {
+	#modalDiv {
+		display: block;
+	}
+	#menuClose {
+		display: none;
+	}
+	#cont {
+		display: none;
+	}
+}

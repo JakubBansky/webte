@@ -1,11 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Tile Painter - Home</title>
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/x-icon" href="images/android/android-launchericon-48-48.png">
 </head>
+
 <body>
-    
+<div class="alignCenter">
+    <h1 class="title">Tile Painter</h1>
+</div>
+
+<div class="alignCenter">
+    <div id="cont">
+        <div class="background">
+            <a href="game.html" id="play" class="btn btn-dark">Play game</a>
+            <button type="button" id="menuOpen" class="btn btn-dark">Game instructions</button>
+        </div>
+    </div>
+</div>
+
+<div id=modalDiv class="modal">
+    <div class="alignCenter">
+        <div class="modalDivI text-center">
+            <h1>Instructions</h1><br>
+            <button type="button" id="menuClose" class="btn btn-dark">X</button>
+            <div class="modalIn">Paint all tiles inside a house, once you finish all 5 levels, you can either quit or play again</div>
+            <div class="modalPad modalTit">PC</div>
+            <div class="modalIn">On the computer, you control the game using the keys (up, down, left, right) on the keyboard.
+                After pressing the up button, the current position moves, and it colors the tiles that can be colored above the current position.
+                After pressing the down button, the current position moves, and it colors the tiles that can be colored below the current position.
+                After pressing the left button, the current position moves, and it colors the tiles that can be colored to the left of the current position.
+                After pressing the right button, the current position moves, and it colors the tiles that can be colored to the right of the current position.
+            </div>
+
+            <div class="modalPad modalTit">Mobile</div>
+            <div class="modalIn">On a mobile device, you use the built-in gyroscope to control the game by tilting the phone on the sides.
+                After tilting the phone to the left, the current position moves, and it colors the tiles that can be colored to the left of the current position.
+                After tilting the phone to the right, the current position moves, and it colors the tiles that can be colored to the right of the current position.
+                After tilting the phone up, the current position moves, and it colors the squares that can be colored above the current position.
+                After tilting the phone down, the current position moves, and it colors the squares that can be colored below the current position.
+            </div>
+            <div class="modalPad modalIn">The current position is marked with a white color in each level. Orange color is coloring and also the color of the starting position. Tiles marked with wood are barriers and cannot be colored. The task of each level is to color all the tiles designated for coloring.
+            </div>
+            <div class="modalPad modalIn">Now you are all set, have fun.</div>
+        </div>
+    </div>
+</div>
+
+<script src="menu.js">
+</script>
+<script>
+    navigator.serviceWorker.register('./serviceWorker.js')
+        .then((reg) => {
+            console.log("service worker registered", reg)
+        })
+        .catch((err) => {
+            console.log("error when registering service worker", err)
+        })
+</script>
 </body>
+
 </html>
