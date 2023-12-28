@@ -164,13 +164,16 @@ body {
 }
 
 @media print {
-	#modalDiv {
+	#modalDivI {
 		display: block;
 	}
 	#menuClose {
 		display: none;
 	}
 	#cont {
+		display: none;
+	}
+	.title {
 		display: none;
 	}
 }
