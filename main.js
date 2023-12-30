@@ -3,6 +3,7 @@ let startPos;
 let allPainted = false;
 let size;
 let levelOrder;
+let helpDiv = document.getElementById('helpDiv');
 
 function coordToString(x, y) {
     return (String(x) + String(y));
@@ -276,6 +277,23 @@ if (localStorage.getItem('task')) {
     removeTaskFromArray(taskNum, levelOrder);
 }
 
+showHelp();
+function showHelp(){
+    helpDiv.innerHTML = '';
+    if(taskNum == 0){
+        helpDiv.innerHTML = "Pri tomto leveli nie je potrebná nápoveda.";
+    } else if(taskNum == 1){
+        helpDiv.innerHTML = "Pri tomto leveli nie je potrebná nápoveda.";
+    } else if(taskNum == 2){
+        helpDiv.innerHTML = "Z pozície štart treba ísť najprv nahor a doprava a vyfarbiť hornú plochu.";
+    } else if(taskNum == 3){
+        helpDiv.innerHTML = "Pri tomto leveli nie je potrebná nápoveda.";
+    } else if(taskNum == 4){
+        helpDiv.innerHTML = "Z pozície štart treba ísť vľavo a vyfarbiť celý stĺpec.";
+    }
+}
+
+console.log(taskNum);
 let againButton = document.getElementById("again");
 againButton.addEventListener("click", () => {
     let modalFinished = document.getElementById("modalFinished");
@@ -286,6 +304,9 @@ againButton.addEventListener("click", () => {
     localStorage.setItem('task', taskNum);
     localStorage.setItem('levelOrder', levelOrder);
     getData(taskNum);
+
+    showHelp();
+
     modalFinished.style.display = "none";
 })
 
@@ -326,6 +347,9 @@ nextButton.addEventListener("click", () => {
             let modalFinished = document.getElementById("modalFinished");
             modalFinished.style.display = 'block';
         }
+
+        showHelp();
+
         console.log(localStorage);
     }
 });
@@ -346,3 +370,15 @@ let menuGButton = document.getElementById("menuG");
 menuGButton.addEventListener("click", () => {
     window.location.href = "index.html";
 })
+
+let helpButton = document.getElementById("help");
+helpButton.addEventListener("click", () => {
+    let modalHelp = document.getElementById('modalHelp');
+    modalHelp.style.display  = 'block';
+});
+
+let closeButton = document.getElementById("close");
+closeButton.addEventListener("click", () => {
+    let modalHelp = document.getElementById('modalHelp');
+    modalHelp.style.display  = 'none';
+});

@@ -106,7 +106,7 @@ body {
 .buttonDiv {
 	padding-top: 1em;
 }
-#restart, #menuG, #play, #menuOpen, #menu, #next, #again, #quit{
+#restart, #menuG, #play, #menuOpen, #menu, #next, #again, #quit, #help, #close{
 	font-weight: bold;
 }
 
@@ -135,6 +135,22 @@ body {
 	margin: 1rem;
 }
 
+#task1, #task2, #task3, #task4, #task5 {
+	display: none;
+}
+
+#close {
+	margin-top: 2em;
+}
+.modalDivHelp {
+	margin-top: 10em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	width: 400px;
+	height: max-content;
+	background-color: lightgray;
+	border-radius: 0.7em;
+}
 @media screen and (max-width: 768px) {
 	#cont {
 		margin-top: 0.3rem;
