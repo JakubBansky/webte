@@ -286,12 +286,12 @@ function showHelp(){
     } else if(taskNum == 1){
         helpButton.disabled = true;
     } else if(taskNum == 2){
-        helpDiv.innerHTML = "Z pozície štart treba ísť najprv nahor a doprava a vyfarbiť hornú plochu.";
+        helpDiv.innerHTML = "From the starting position, go first up and to the right and color the upper tiles.";
         helpButton.disabled = false;
     } else if(taskNum == 3){
         helpButton.disabled = true;
     } else if(taskNum == 4){
-        helpDiv.innerHTML = "Z pozície štart treba ísť vľavo a vyfarbiť celý stĺpec.";
+        helpDiv.innerHTML = "From the starting position, go left and color the entire column";
         helpButton.disabled = false;
     }
 }
