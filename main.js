@@ -148,14 +148,15 @@ function handleOrientation(event) {
         // camera left
         if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
             // -up-/-down-
-            if (gamma > -60 && gamma < -50) {
+            if (gamma > -50 && gamma < -45) {
                 paintUp(grid);
                 console.log("up");
 
-            } else if (gamma < -80 && gamma > -90) {
+            } else if (gamma < -70 && gamma > -75) {
                 paintDown(grid);
                 console.log("down");
             }
+
         }
     }
     // camera right
@@ -173,11 +174,11 @@ function handleOrientation(event) {
         // camera left
         if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
             // -up-/-down-
-            if (gamma > 50 && gamma < 60) {
+            if (gamma > 45 && gamma < 50) {
                 paintUp(grid);
                 console.log("Rup");
 
-            } else if (gamma < 90 && gamma > 80) {
+            } else if (gamma < 75 && gamma > 70) {
                 paintDown(grid);
                 console.log("Rdown");
             }
