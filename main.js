@@ -279,17 +279,20 @@ if (localStorage.getItem('task')) {
 
 showHelp();
 function showHelp(){
+    let helpButton = document.getElementById('help');
     helpDiv.innerHTML = '';
     if(taskNum == 0){
-        helpDiv.innerHTML = "Pri tomto leveli nie je potrebná nápoveda.";
+        helpButton.disabled = true;
     } else if(taskNum == 1){
-        helpDiv.innerHTML = "Pri tomto leveli nie je potrebná nápoveda.";
+        helpButton.disabled = true;
     } else if(taskNum == 2){
         helpDiv.innerHTML = "Z pozície štart treba ísť najprv nahor a doprava a vyfarbiť hornú plochu.";
+        helpButton.disabled = false;
     } else if(taskNum == 3){
-        helpDiv.innerHTML = "Pri tomto leveli nie je potrebná nápoveda.";
+        helpButton.disabled = true;
     } else if(taskNum == 4){
         helpDiv.innerHTML = "Z pozície štart treba ísť vľavo a vyfarbiť celý stĺpec.";
+        helpButton.disabled = false;
     }
 }
 
