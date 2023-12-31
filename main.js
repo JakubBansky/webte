@@ -131,59 +131,86 @@ function handleOrientation(event) {
     var beta = event.beta;
     var gamma = event.gamma;
     var betaSensitivity = 12;
+    var baseBeta = 60;
+    var portraitGamaSensitivity = 25;
+    var portraitBetaSensitivity = 15;
 
-    // camera left
-    console.log(alpha);
-    if (alpha < 300 && alpha > 260) {
-        if (beta < 15 && beta > -15) {
-            if (beta < -betaSensitivity) {
-                paintLeft(grid);
-                console.log("Lleft");
+    // na sirku 
+    // // camera left
+    // console.log(alpha);
+    // if (alpha < 300 && alpha > 260) {
+    //     if (beta < 15 && beta > -15) {
+    //         if (beta < -betaSensitivity) {
+    //             paintLeft(grid);
+    //             console.log("Lleft");
 
-            } else if (beta > betaSensitivity) {
-                paintRight(grid);
-                console.log("Lright");
-            }
-        }
-        // camera left
-        if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-            // -up-/-down-
-            if (gamma > -50 && gamma < -45) {
-                paintUp(grid);
-                console.log("up");
+    //         } else if (beta > betaSensitivity) {
+    //             paintRight(grid);
+    //             console.log("Lright");
+    //         }
+    //     }
+    //     // camera left
+    //     if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
+    //         // -up-/-down-
+    //         if (gamma > -50 && gamma < -45) {
+    //             paintUp(grid);
+    //             console.log("up");
 
-            } else if (gamma < -70 && gamma > -75) {
-                paintDown(grid);
-                console.log("down");
-            }
+    //         } else if (gamma < -70 && gamma > -75) {
+    //             paintDown(grid);
+    //             console.log("down");
+    //         }
 
-        }
+    //     }
+    // }
+    // // camera right
+    // if (alpha < 110 && alpha > 70) {
+    //     if (beta < 15 && beta > -15) {
+    //         if (beta < -betaSensitivity) {
+    //             paintRight(grid);
+    //             console.log("Rleft");
+
+    //         } else if (beta > betaSensitivity) {
+    //             paintLeft(grid);
+    //             console.log("Rright");
+    //         }
+    //     }
+    //     // camera left
+    //     if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
+    //         // -up-/-down-
+    //         if (gamma > 45 && gamma < 50) {
+    //             paintUp(grid);
+    //             console.log("Rup");
+
+    //         } else if (gamma < 75 && gamma > 70) {
+    //             paintDown(grid);
+    //             console.log("Rdown");
+    //         }
+    //     }
+    // }
+
+
+    if (gamma < -portraitGamaSensitivity) {
+        paintLeft(grid);
+        console.log("Lleft");
+
+    } else if (gamma > portraitGamaSensitivity) {
+        paintRight(grid);
+        console.log("Lright");
     }
-    // camera right
-    if (alpha < 110 && alpha > 70) {
-        if (beta < 15 && beta > -15) {
-            if (beta < -betaSensitivity) {
-                paintRight(grid);
-                console.log("Rleft");
 
-            } else if (beta > betaSensitivity) {
-                paintLeft(grid);
-                console.log("Rright");
-            }
-        }
-        // camera left
-        if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-            // -up-/-down-
-            if (gamma > 45 && gamma < 50) {
-                paintUp(grid);
-                console.log("Rup");
 
-            } else if (gamma < 75 && gamma > 70) {
-                paintDown(grid);
-                console.log("Rdown");
-            }
-        }
+    if (beta < baseBeta - portraitBetaSensitivity) {
+        paintUp(grid);
+        console.log("up");
+
+    } else if (beta > baseBeta + portraitBetaSensitivity) {
+        paintDown(grid);
+        console.log("down");
     }
+
+
+
 
     checkAllPainted(grid);
     if (allPainted) {
@@ -279,19 +306,20 @@ if (localStorage.getItem('task')) {
 }
 
 showHelp();
-function showHelp(){
+
+function showHelp() {
     let helpButton = document.getElementById('help');
     helpDiv.innerHTML = '';
-    if(taskNum == 0){
+    if (taskNum == 0) {
         helpButton.disabled = true;
-    } else if(taskNum == 1){
+    } else if (taskNum == 1) {
         helpButton.disabled = true;
-    } else if(taskNum == 2){
+    } else if (taskNum == 2) {
         helpDiv.innerHTML = "Z pozície štart treba ísť najprv nahor a doprava a vyfarbiť hornú plochu.";
         helpButton.disabled = false;
-    } else if(taskNum == 3){
+    } else if (taskNum == 3) {
         helpButton.disabled = true;
-    } else if(taskNum == 4){
+    } else if (taskNum == 4) {
         helpDiv.innerHTML = "Z pozície štart treba ísť vľavo a vyfarbiť celý stĺpec.";
         helpButton.disabled = false;
     }
@@ -378,11 +406,11 @@ menuGButton.addEventListener("click", () => {
 let helpButton = document.getElementById("help");
 helpButton.addEventListener("click", () => {
     let modalHelp = document.getElementById('modalHelp');
-    modalHelp.style.display  = 'block';
+    modalHelp.style.display = 'block';
 });
 
 let closeButton = document.getElementById("close");
 closeButton.addEventListener("click", () => {
     let modalHelp = document.getElementById('modalHelp');
-    modalHelp.style.display  = 'none';
+    modalHelp.style.display = 'none';
 });
