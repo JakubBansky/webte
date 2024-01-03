@@ -73,15 +73,12 @@ function paintLogic(direction) {
 
         case 2:
             startPos.x -= 1
-
             break;
         case 3:
             startPos.y -= 1
-
             break;
         case 4:
             startPos.y += 1
-
             break;
 
         default:
@@ -91,8 +88,7 @@ function paintLogic(direction) {
     toPaint.classList.add("painted");
     toPaint.classList.add('actualPos');
     checkAllPainted(grid);
-
-};
+}
 
 async function paintRight(grid) {
     while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {
@@ -107,7 +103,6 @@ async function paintLeft(grid) {
         paintLogic(2);
         await delayedLog();
     }
-
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
 }
 
