@@ -172,9 +172,9 @@ function handleOrientation(event) {
     var portraitGamaSensitivity = 25;
     var portraitBetaSensitivity = 15;
 
-    if(beta === null && gamma === null){
-        return;
-    }
+    // if (beta === null && gamma === null) {
+    //     return;
+    // }
 
     if (gamma < -portraitGamaSensitivity) {
         paintLeft(grid);
