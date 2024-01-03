@@ -62,13 +62,7 @@ async function delayedLog() {
 }
 
 async function paintRight(grid) {
-    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if (actualPos.classList.contains('actualPos')) {
-        actualPos.classList.remove('actualPos');
-    }
-
     while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {
-        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         if (toPaint.classList.contains('actualPos')) {
             toPaint.classList.remove('actualPos');
@@ -76,24 +70,21 @@ async function paintRight(grid) {
         startPos.x += 1
         toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        toPaint.classList.add("actualPos");
+        toPaint.classList.add('actualPos');
+        checkAllPainted(grid);
+        if (allPainted) {
+            let modal = document.getElementById("modal");
+            modal.style.display = "block";
+        }
+        await delayedLog();
     }
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
-    checkAllPainted(grid);
-    if (allPainted) {
-        let modal = document.getElementById("modal");
-        modal.style.display = "block";
-    }
+
+
 }
 
 async function paintLeft(grid) {
-    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if (actualPos.classList.contains('actualPos')) {
-        actualPos.classList.remove('actualPos');
-    }
-
     while ((grid[startPos.y][startPos.x - 1] !== 1) && (startPos.x - 1 >= 0)) {
-        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         if (toPaint.classList.contains('actualPos')) {
             toPaint.classList.remove('actualPos');
@@ -101,25 +92,20 @@ async function paintLeft(grid) {
         startPos.x -= 1
         toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        toPaint.classList.add("actualPos");
+        toPaint.classList.add('actualPos');
+        checkAllPainted(grid);
+        if (allPainted) {
+            let modal = document.getElementById("modal");
+            modal.style.display = "block";
+        }
+        await delayedLog();
+    }
 
-    }
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
-    checkAllPainted(grid);
-    if (allPainted) {
-        let modal = document.getElementById("modal");
-        modal.style.display = "block";
-    }
 }
 
 async function paintUp(grid) {
-    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if (actualPos.classList.contains('actualPos')) {
-        actualPos.classList.remove('actualPos');
-    }
-
     while ((startPos.y - 1 >= 0) && (grid[startPos.y - 1][startPos.x] !== 1)) {
-        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         if (toPaint.classList.contains('actualPos')) {
             toPaint.classList.remove('actualPos');
@@ -127,40 +113,38 @@ async function paintUp(grid) {
         startPos.y -= 1
         toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        toPaint.classList.add("actualPos");
+        toPaint.classList.add('actualPos');
+        checkAllPainted(grid);
+        if (allPainted) {
+            let modal = document.getElementById("modal");
+            modal.style.display = "block";
+        }
+        await delayedLog();
     }
+
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
-    checkAllPainted(grid);
-    if (allPainted) {
-        let modal = document.getElementById("modal");
-        modal.style.display = "block";
-    }
 }
 
 
 async function paintDown(grid) {
-    let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
-    if (actualPos.classList.contains('actualPos')) {
-        actualPos.classList.remove('actualPos');
-    }
-
     while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] !== 1)) {
-        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         if (toPaint.classList.contains('actualPos')) {
             toPaint.classList.remove('actualPos');
         }
-        startPos.y += 1
+        startPos.y += 1;
         toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-        toPaint.classList.add("actualPos");
+        toPaint.classList.add('actualPos');
+        checkAllPainted(grid);
+        if (allPainted) {
+            let modal = document.getElementById("modal");
+            modal.style.display = "block";
+        }
+        await delayedLog();
     }
+
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
-    checkAllPainted(grid);
-    if (allPainted) {
-        let modal = document.getElementById("modal");
-        modal.style.display = "block";
-    }
 }
 
 window.addEventListener("deviceorientation", handleOrientation, true);
@@ -172,9 +156,9 @@ function handleOrientation(event) {
     var portraitGamaSensitivity = 25;
     var portraitBetaSensitivity = 15;
 
-    // if (beta === null && gamma === null) {
-    //     return;
-    // }
+    if (beta === null && gamma === null) {
+        return;
+    }
 
     if (gamma < -portraitGamaSensitivity) {
         paintLeft(grid);
