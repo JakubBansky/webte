@@ -18,18 +18,7 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-    event.waitUntil(
-        caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.map(function(existingCacheName) {
-                    if (existingCacheName !== cacheName) {
-                        return caches.delete(existingCacheName);
-                    }
-                })
-            );
-        })
-    );
-
+    console.log("service worker activated", event)
 });
 
 self.addEventListener('fetch', function(event) {

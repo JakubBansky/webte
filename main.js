@@ -61,8 +61,6 @@ async function delayedLog() {
     await sleep(15);
 }
 
-
-
 async function paintRight(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
     if (actualPos.classList.contains('actualPos')) {
@@ -166,15 +164,10 @@ async function paintDown(grid) {
 }
 
 window.addEventListener("deviceorientation", handleOrientation, true);
-// const windowWidth = window.innerWidth;
-// const windowHeight = window.innerHeight;
-// console.log(`Window Size: ${windowWidth} x ${windowHeight}`);
 
 function handleOrientation(event) {
-    // var alpha = event.alpha;
     var beta = event.beta;
     var gamma = event.gamma;
-    // var betaSensitivity = 12;
     var baseBeta = 60;
     var portraitGamaSensitivity = 25;
     var portraitBetaSensitivity = 15;
@@ -182,60 +175,6 @@ function handleOrientation(event) {
     if(beta === null && gamma === null){
         return;
     }
-
-    // na sirku 
-    // // camera left
-    // console.log(alpha);
-    // if (alpha < 300 && alpha > 260) {
-    //     if (beta < 15 && beta > -15) {
-    //         if (beta < -betaSensitivity) {
-    //             paintLeft(grid);
-    //             console.log("Lleft");
-
-    //         } else if (beta > betaSensitivity) {
-    //             paintRight(grid);
-    //             console.log("Lright");
-    //         }
-    //     }
-    //     // camera left
-    //     if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-    //         // -up-/-down-
-    //         if (gamma > -50 && gamma < -45) {
-    //             paintUp(grid);
-    //             console.log("up");
-
-    //         } else if (gamma < -70 && gamma > -75) {
-    //             paintDown(grid);
-    //             console.log("down");
-    //         }
-
-    //     }
-    // }
-    // // camera right
-    // if (alpha < 110 && alpha > 70) {
-    //     if (beta < 15 && beta > -15) {
-    //         if (beta < -betaSensitivity) {
-    //             paintRight(grid);
-    //             console.log("Rleft");
-
-    //         } else if (beta > betaSensitivity) {
-    //             paintLeft(grid);
-    //             console.log("Rright");
-    //         }
-    //     }
-    //     // camera left
-    //     if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-    //         // -up-/-down-
-    //         if (gamma > 45 && gamma < 50) {
-    //             paintUp(grid);
-    //             console.log("Rup");
-
-    //         } else if (gamma < 75 && gamma > 70) {
-    //             paintDown(grid);
-    //             console.log("Rdown");
-    //         }
-    //     }
-    // }
 
     if (gamma < -portraitGamaSensitivity) {
         paintLeft(grid);
@@ -260,8 +199,6 @@ function handleOrientation(event) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
     }
-
-
 }
 
 function handleArrowKey(event) {
@@ -285,7 +222,6 @@ function handleArrowKey(event) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
     }
-
 }
 
 document.addEventListener("keydown", handleArrowKey);
@@ -400,16 +336,6 @@ nextButton.addEventListener("click", () => {
         let modalFinished = document.getElementById("modalFinished");
         modalFinished.style.display = 'block';
         console.log(localStorage);
-
-        /*
-        levelOrder = genRandomArray(5);
-        taskNum = levelOrder[0];
-        removeTaskFromArray(taskNum, levelOrder);
-        localStorage.setItem('task', taskNum);
-        localStorage.setItem('levelOrder', levelOrder);
-        getData(taskNum);
-
-         */
     } else {
         console.log(localStorage);
         taskNum = levelOrder[0];
