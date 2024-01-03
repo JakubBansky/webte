@@ -53,8 +53,13 @@ function createGrid(grid) {
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("painted");
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-
+async function delayedLog() {
+    await sleep(15);
+}
 
 async function paintRight(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
@@ -63,125 +68,130 @@ async function paintRight(grid) {
     }
 
     while (grid[startPos.y][startPos.x + 1] !== 1 && (startPos.x + 1 < size)) {
-        startPos.x += 1
+        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        if (toPaint.classList.contains('actualPos')) {
+            toPaint.classList.remove('actualPos');
+        }
+        startPos.x += 1
+        toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
+        toPaint.classList.add("actualPos");
     }
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
-
-
+    checkAllPainted(grid);
+    if (allPainted) {
+        let modal = document.getElementById("modal");
+        modal.style.display = "block";
+    }
 }
 
-function paintLeft(grid) {
+async function paintLeft(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
     if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
     while ((grid[startPos.y][startPos.x - 1] !== 1) && (startPos.x - 1 >= 0)) {
-        startPos.x -= 1
+        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        if (toPaint.classList.contains('actualPos')) {
+            toPaint.classList.remove('actualPos');
+        }
+        startPos.x -= 1
+        toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-    }
+        toPaint.classList.add("actualPos");
 
+    }
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+    checkAllPainted(grid);
+    if (allPainted) {
+        let modal = document.getElementById("modal");
+        modal.style.display = "block";
+    }
 }
 
-function paintUp(grid) {
+async function paintUp(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
     if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
     while ((startPos.y - 1 >= 0) && (grid[startPos.y - 1][startPos.x] !== 1)) {
-        startPos.y -= 1
+        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        if (toPaint.classList.contains('actualPos')) {
+            toPaint.classList.remove('actualPos');
+        }
+        startPos.y -= 1
+        toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
-
+        toPaint.classList.add("actualPos");
     }
-
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+    checkAllPainted(grid);
+    if (allPainted) {
+        let modal = document.getElementById("modal");
+        modal.style.display = "block";
+    }
 }
 
 
-function paintDown(grid) {
+async function paintDown(grid) {
     let actualPos = document.getElementById(coordToString(startPos.x, startPos.y));
     if (actualPos.classList.contains('actualPos')) {
         actualPos.classList.remove('actualPos');
     }
 
     while ((startPos.y + 1 < size) && (grid[startPos.y + 1][startPos.x] !== 1)) {
-        startPos.y += 1
+        await delayedLog();
         let toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
+        if (toPaint.classList.contains('actualPos')) {
+            toPaint.classList.remove('actualPos');
+        }
+        startPos.y += 1
+        toPaint = document.getElementById(coordToString(startPos.x, startPos.y));
         toPaint.classList.add("painted");
+        toPaint.classList.add("actualPos");
     }
-
     document.getElementById(coordToString(startPos.x, startPos.y)).classList.add("actualPos");
+    checkAllPainted(grid);
+    if (allPainted) {
+        let modal = document.getElementById("modal");
+        modal.style.display = "block";
+    }
 }
 
 window.addEventListener("deviceorientation", handleOrientation, true);
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
-
-// Log window size to the console
-console.log(`Window Size: ${windowWidth} x ${windowHeight}`);
 
 function handleOrientation(event) {
-    var alpha = event.alpha;
     var beta = event.beta;
     var gamma = event.gamma;
-    var betaSensitivity = 12;
+    var baseBeta = 60;
+    var portraitGamaSensitivity = 25;
+    var portraitBetaSensitivity = 15;
 
-    // camera left
-    console.log(alpha);
-    if (alpha < 300 && alpha > 260) {
-        if (beta < 15 && beta > -15) {
-            if (beta < -betaSensitivity) {
-                paintLeft(grid);
-                console.log("Lleft");
-
-            } else if (beta > betaSensitivity) {
-                paintRight(grid);
-                console.log("Lright");
-            }
-        }
-        // camera left
-        if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-            // -up-/-down-
-            if (gamma > -60 && gamma < -50) {
-                paintUp(grid);
-                console.log("up");
-
-            } else if (gamma < -80 && gamma > -90) {
-                paintDown(grid);
-                console.log("down");
-            }
-        }
+    if(beta === null && gamma === null){
+        return;
     }
-    // camera right
-    if (alpha < 110 && alpha > 70) {
-        if (beta < 15 && beta > -15) {
-            if (beta < -betaSensitivity) {
-                paintRight(grid);
-                console.log("Rleft");
 
-            } else if (beta > betaSensitivity) {
-                paintLeft(grid);
-                console.log("Rright");
-            }
-        }
-        // camera left
-        if ((beta < 5 && beta > -5) || (beta > -180 && beta > -175)) {
-            // -up-/-down-
-            if (gamma > 50 && gamma < 60) {
-                paintUp(grid);
-                console.log("Rup");
+    if (gamma < -portraitGamaSensitivity) {
+        paintLeft(grid);
+        console.log("Lleft");
 
-            } else if (gamma < 90 && gamma > 80) {
-                paintDown(grid);
-                console.log("Rdown");
-            }
-        }
+    } else if (gamma > portraitGamaSensitivity) {
+        paintRight(grid);
+        console.log("Lright");
+    }
+
+    if (beta < baseBeta - portraitBetaSensitivity) {
+        paintUp(grid);
+        console.log("gyroUp");
+
+    } else if (beta > baseBeta + portraitBetaSensitivity) {
+        paintDown(grid);
+        console.log("down");
     }
 
     checkAllPainted(grid);
@@ -189,8 +199,6 @@ function handleOrientation(event) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
     }
-
-
 }
 
 function handleArrowKey(event) {
@@ -214,7 +222,6 @@ function handleArrowKey(event) {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
     }
-
 }
 
 document.addEventListener("keydown", handleArrowKey);
@@ -278,19 +285,20 @@ if (localStorage.getItem('task')) {
 }
 
 showHelp();
-function showHelp(){
+
+function showHelp() {
     let helpButton = document.getElementById('help');
     helpDiv.innerHTML = '';
-    if(taskNum == 0){
+    if (taskNum == 0) {
         helpButton.disabled = true;
-    } else if(taskNum == 1){
+    } else if (taskNum == 1) {
         helpButton.disabled = true;
-    } else if(taskNum == 2){
+    } else if (taskNum == 2) {
         helpDiv.innerHTML = "From the starting position, go first up and to the right and color the upper tiles.";
         helpButton.disabled = false;
-    } else if(taskNum == 3){
+    } else if (taskNum == 3) {
         helpButton.disabled = true;
-    } else if(taskNum == 4){
+    } else if (taskNum == 4) {
         helpDiv.innerHTML = "From the starting position, go left and color the entire column";
         helpButton.disabled = false;
     }
@@ -328,16 +336,6 @@ nextButton.addEventListener("click", () => {
         let modalFinished = document.getElementById("modalFinished");
         modalFinished.style.display = 'block';
         console.log(localStorage);
-
-        /*
-        levelOrder = genRandomArray(5);
-        taskNum = levelOrder[0];
-        removeTaskFromArray(taskNum, levelOrder);
-        localStorage.setItem('task', taskNum);
-        localStorage.setItem('levelOrder', levelOrder);
-        getData(taskNum);
-
-         */
     } else {
         console.log(localStorage);
         taskNum = levelOrder[0];
@@ -377,11 +375,11 @@ menuGButton.addEventListener("click", () => {
 let helpButton = document.getElementById("help");
 helpButton.addEventListener("click", () => {
     let modalHelp = document.getElementById('modalHelp');
-    modalHelp.style.display  = 'block';
+    modalHelp.style.display = 'block';
 });
 
 let closeButton = document.getElementById("close");
 closeButton.addEventListener("click", () => {
     let modalHelp = document.getElementById('modalHelp');
-    modalHelp.style.display  = 'none';
+    modalHelp.style.display = 'none';
 });
